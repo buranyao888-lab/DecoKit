@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# WeChat Developer Tools local settings
+project.private.config.json
+
+# Dependencies and generated output
+node_modules/
+miniprogram_npm/
+dist/
+coverage/
+
+# Local logs and environment overrides
+*.log
+.env
+.env.*
+!.env.example
