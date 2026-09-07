@@ -1,0 +1,11 @@
+<view class="page-shell">
+  <text class="eyebrow">粗略估算</text>
+  <view class="page-title">装修预算粗估</view>
+  <view class="page-description">按装修项目梳理预算构成，金额结果仅作粗略参考。</view>
+
+  <view class="placeholder-card">
+    <view class="placeholder-icon">预</view>
+    <text class="placeholder-title">工具框架已就绪</text>
+    <text class="placeholder-text">预算输入与配置功能即将开放。</text>
+  </view>
+</view>

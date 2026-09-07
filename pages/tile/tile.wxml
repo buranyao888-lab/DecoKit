@@ -1,0 +1,11 @@
+<view class="page-shell">
+  <text class="eyebrow">材料用量</text>
+  <view class="page-title">瓷砖用量</view>
+  <view class="page-description">按铺贴面积和瓷砖规格核算所需片数。</view>
+
+  <view class="placeholder-card">
+    <view class="placeholder-icon">砖</view>
+    <text class="placeholder-title">工具框架已就绪</text>
+    <text class="placeholder-text">输入与计算功能即将开放。</text>
+  </view>
+</view>

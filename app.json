@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/tile/tile",
+    "pages/paint/paint",
+    "pages/flooring/flooring",
+    "pages/grout/grout",
+    "pages/curtain/curtain",
+    "pages/budget/budget"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#F7F4EE",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "装修用量计算器",
+    "backgroundColor": "#F7F4EE",
+    "backgroundTextStyle": "dark"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

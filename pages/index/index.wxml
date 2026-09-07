@@ -1,0 +1,57 @@
+<view class="home-page">
+  <view class="hero">
+    <text class="hero__eyebrow">DECOKIT</text>
+    <text class="hero__title">少买不够，多买浪费</text>
+    <text class="hero__description">装修材料一次算清，让每一份用量都有依据。</text>
+  </view>
+
+  <view class="tool-section">
+    <view class="section-heading">
+      <text class="section-heading__title">常用计算</text>
+      <text class="section-heading__count">4 项工具</text>
+    </view>
+
+    <view class="tool-grid">
+      <view
+        class="tool-card"
+        wx:for="{{primaryTools}}"
+        wx:key="id"
+        data-path="{{item.path}}"
+        bindtap="openTool"
+        hover-class="tool-card--pressed"
+      >
+        <view class="tool-card__icon">{{item.icon}}</view>
+        <text class="tool-card__name">{{item.name}}</text>
+        <text class="tool-card__description">{{item.description}}</text>
+        <text class="tool-card__link">打开工具 →</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="tool-section tool-section--more">
+    <view class="section-heading">
+      <text class="section-heading__title">更多工具</text>
+      <text class="section-heading__count">2 项工具</text>
+    </view>
+
+    <view class="more-list">
+      <view
+        class="more-card"
+        wx:for="{{moreTools}}"
+        wx:key="id"
+        data-path="{{item.path}}"
+        bindtap="openTool"
+        hover-class="more-card--pressed"
+      >
+        <view class="more-card__icon">{{item.icon}}</view>
+        <view class="more-card__content">
+          <text class="more-card__name">{{item.name}}</text>
+          <text class="more-card__description">{{item.description}}</text>
+        </view>
+        <text class="more-card__arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <text class="home-footer">透明计算 · 中性提示 · 本地运行</text>
+</view>
