@@ -3,9 +3,111 @@
   <view class="page-title">瓷砖用量</view>
   <view class="page-description">按铺贴面积和瓷砖规格核算所需片数。</view>
 
-  <view class="placeholder-card">
-    <view class="placeholder-icon">砖</view>
-    <text class="placeholder-title">工具框架已就绪</text>
-    <text class="placeholder-text">输入与计算功能即将开放。</text>
+  <view class="form-card">
+    <text class="form-section-title">填写铺贴信息</text>
+    <text class="form-note">尺寸统一使用毫米，铺贴方式需要手动选择。</text>
+
+    <view class="field">
+      <view class="field__header">
+        <text class="field__label">铺贴面积</text>
+        <text class="field__unit">㎡</text>
+      </view>
+      <input class="field__input {{fieldErrors.areaM2 ? 'field__input--error' : ''}}" type="digit" value="{{form.areaM2}}" placeholder="例如 12.5" data-field="areaM2" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.areaM2}}" class="field__error">{{fieldErrors.areaM2}}</text>
+    </view>
+
+    <view class="field">
+      <view class="field__header">
+        <text class="field__label">瓷砖长度</text>
+        <text class="field__unit">mm</text>
+      </view>
+      <input class="field__input {{fieldErrors.tileLengthMm ? 'field__input--error' : ''}}" type="digit" value="{{form.tileLengthMm}}" placeholder="例如 600" data-field="tileLengthMm" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.tileLengthMm}}" class="field__error">{{fieldErrors.tileLengthMm}}</text>
+    </view>
+
+    <view class="field">
+      <view class="field__header">
+        <text class="field__label">瓷砖宽度</text>
+        <text class="field__unit">mm</text>
+      </view>
+      <input class="field__input {{fieldErrors.tileWidthMm ? 'field__input--error' : ''}}" type="digit" value="{{form.tileWidthMm}}" placeholder="例如 600" data-field="tileWidthMm" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.tileWidthMm}}" class="field__error">{{fieldErrors.tileWidthMm}}</text>
+    </view>
+
+    <view class="field">
+      <view class="field__header">
+        <text class="field__label">铺贴方式</text>
+        <text class="field__unit">必选</text>
+      </view>
+      <view class="choice-row">
+        <button wx:for="{{layingOptions}}" wx:key="value" class="choice-chip {{form.layingMode === item.value ? 'choice-chip--active' : ''}}" data-value="{{item.value}}" bindtap="selectLayingMode">{{item.label}}</button>
+      </view>
+      <text wx:if="{{fieldErrors.layingMode}}" class="field__error">{{fieldErrors.layingMode}}</text>
+    </view>
+
+    <view class="subsection">
+      <text class="subsection-title">采购信息（选填）</text>
+
+      <view class="field">
+        <view class="field__header">
+          <text class="field__label">每箱片数</text>
+          <text class="field__optional">选填 · 片/箱</text>
+        </view>
+        <input class="field__input {{fieldErrors.piecesPerBox ? 'field__input--error' : ''}}" type="digit" value="{{form.piecesPerBox}}" placeholder="填写后计算箱数" data-field="piecesPerBox" bindinput="onInput" />
+        <text wx:if="{{fieldErrors.piecesPerBox}}" class="field__error">{{fieldErrors.piecesPerBox}}</text>
+      </view>
+
+      <view class="field">
+        <view class="field__header">
+          <text class="field__label">商家建议数量</text>
+          <text class="field__optional">选填 · 片</text>
+        </view>
+        <input class="field__input {{fieldErrors.merchantPieces ? 'field__input--error' : ''}}" type="digit" value="{{form.merchantPieces}}" placeholder="填写后对比参考值" data-field="merchantPieces" bindinput="onInput" />
+        <text wx:if="{{fieldErrors.merchantPieces}}" class="field__error">{{fieldErrors.merchantPieces}}</text>
+      </view>
+    </view>
+
+    <view class="button-row">
+      <button class="primary-button" bindtap="calculate">计算用量</button>
+      <button class="secondary-button" bindtap="reset">重置</button>
+    </view>
+
+    <view wx:if="{{pageError}}" class="page-error">{{pageError}}</view>
+  </view>
+
+  <view wx:if="{{hasCalculated}}" class="result-card">
+    <view class="result-heading">
+      <text class="result-title">计算结果</text>
+      <text class="confidence-badge">{{displayResult.confidence}}</text>
+    </view>
+    <view class="result-grid">
+      <view class="result-item">
+        <text class="result-item__label">理论片数</text>
+        <text class="result-item__value">{{displayResult.theoreticalPieces}}</text>
+        <text class="result-item__unit">片</text>
+      </view>
+      <view class="result-item result-item--primary">
+        <text class="result-item__label">推荐片数</text>
+        <text class="result-item__value">{{displayResult.recommendedPieces}}</text>
+        <text class="result-item__unit">片</text>
+      </view>
+      <view class="result-item">
+        <text class="result-item__label">参考损耗</text>
+        <text class="result-item__value">{{displayResult.lossRate}}</text>
+      </view>
+      <view wx:if="{{displayResult.hasBoxes}}" class="result-item">
+        <text class="result-item__label">建议箱数</text>
+        <text class="result-item__value">{{displayResult.boxes}}</text>
+        <text class="result-item__unit">箱</text>
+      </view>
+    </view>
+
+    <view wx:if="{{displayResult.hasMerchant}}" class="result-detail merchant-result">
+      <text class="result-detail__title">商家建议量对比</text>
+      <text class="result-detail__text">与推荐量差异：{{displayResult.merchantExcessRate}}</text>
+      <text class="merchant-result__message">{{displayResult.merchantDifferenceBand}}</text>
+    </view>
+
+    <button class="share-button" open-type="share">分享这个工具</button>
   </view>
 </view>

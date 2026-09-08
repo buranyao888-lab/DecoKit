@@ -3,9 +3,77 @@
   <view class="page-title">装修预算粗估</view>
   <view class="page-description">按装修项目梳理预算构成，金额结果仅作粗略参考。</view>
 
-  <view class="placeholder-card">
-    <view class="placeholder-icon">预</view>
-    <text class="placeholder-title">工具框架已就绪</text>
-    <text class="placeholder-text">预算输入与配置功能即将开放。</text>
+  <view class="form-card">
+    <text class="form-section-title">填写十项预算</text>
+    <text class="form-note">每项都需要填写；没有支出时请明确填写 0。本工具不会自动生成市场价格。</text>
+
+    <view class="field">
+      <view class="field__header"><text class="field__label">基础施工</text><text class="field__unit">元</text></view>
+      <input class="field__input {{fieldErrors.baseConstruction ? 'field__input--error' : ''}}" type="digit" value="{{form.baseConstruction}}" placeholder="请输入金额" data-field="baseConstruction" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.baseConstruction}}" class="field__error">{{fieldErrors.baseConstruction}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">水电工程</text><text class="field__unit">元</text></view>
+      <input class="field__input {{fieldErrors.plumbingElectrical ? 'field__input--error' : ''}}" type="digit" value="{{form.plumbingElectrical}}" placeholder="请输入金额" data-field="plumbingElectrical" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.plumbingElectrical}}" class="field__error">{{fieldErrors.plumbingElectrical}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">瓦工工程</text><text class="field__unit">元</text></view>
+      <input class="field__input {{fieldErrors.masonry ? 'field__input--error' : ''}}" type="digit" value="{{form.masonry}}" placeholder="请输入金额" data-field="masonry" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.masonry}}" class="field__error">{{fieldErrors.masonry}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">木工工程</text><text class="field__unit">元</text></view>
+      <input class="field__input {{fieldErrors.carpentry ? 'field__input--error' : ''}}" type="digit" value="{{form.carpentry}}" placeholder="请输入金额" data-field="carpentry" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.carpentry}}" class="field__error">{{fieldErrors.carpentry}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">油漆工程</text><text class="field__unit">元</text></view>
+      <input class="field__input {{fieldErrors.painting ? 'field__input--error' : ''}}" type="digit" value="{{form.painting}}" placeholder="请输入金额" data-field="painting" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.painting}}" class="field__error">{{fieldErrors.painting}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">主材</text><text class="field__unit">元</text></view>
+      <input class="field__input {{fieldErrors.mainMaterials ? 'field__input--error' : ''}}" type="digit" value="{{form.mainMaterials}}" placeholder="请输入金额" data-field="mainMaterials" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.mainMaterials}}" class="field__error">{{fieldErrors.mainMaterials}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">定制</text><text class="field__unit">元</text></view>
+      <input class="field__input {{fieldErrors.customization ? 'field__input--error' : ''}}" type="digit" value="{{form.customization}}" placeholder="请输入金额" data-field="customization" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.customization}}" class="field__error">{{fieldErrors.customization}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">厨卫</text><text class="field__unit">元</text></view>
+      <input class="field__input {{fieldErrors.kitchenBathroom ? 'field__input--error' : ''}}" type="digit" value="{{form.kitchenBathroom}}" placeholder="请输入金额" data-field="kitchenBathroom" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.kitchenBathroom}}" class="field__error">{{fieldErrors.kitchenBathroom}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">安装</text><text class="field__unit">元</text></view>
+      <input class="field__input {{fieldErrors.installation ? 'field__input--error' : ''}}" type="digit" value="{{form.installation}}" placeholder="请输入金额" data-field="installation" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.installation}}" class="field__error">{{fieldErrors.installation}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">预备金</text><text class="field__unit">元</text></view>
+      <input class="field__input {{fieldErrors.contingency ? 'field__input--error' : ''}}" type="digit" value="{{form.contingency}}" placeholder="请输入金额" data-field="contingency" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.contingency}}" class="field__error">{{fieldErrors.contingency}}</text>
+    </view>
+
+    <view class="button-row">
+      <button class="primary-button" bindtap="calculate">汇总预算</button>
+      <button class="secondary-button" bindtap="reset">重置</button>
+    </view>
+    <view wx:if="{{pageError}}" class="page-error">{{pageError}}</view>
+  </view>
+
+  <view wx:if="{{hasCalculated}}" class="result-card budget-result-card">
+    <view class="result-heading"><text class="result-title">预算汇总</text><text class="confidence-badge">{{displayResult.confidence}}</text></view>
+    <view class="budget-total">
+      <text class="budget-total__label">十项合计</text>
+      <view class="budget-total__value-row"><text class="budget-total__currency">¥</text><text class="budget-total__value">{{displayResult.totalBudget}}</text></view>
+    </view>
+    <view class="warning-list">
+      <view wx:for="{{warnings}}" wx:key="code" class="warning">{{item.message}}</view>
+    </view>
+    <button class="share-button" open-type="share">分享这个工具</button>
   </view>
 </view>

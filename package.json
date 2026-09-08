@@ -2,6 +2,6 @@
   "name": "decokit-calculator-engine",
   "private": true,
   "scripts": {
-    "test": "node --test tests/calculators/*.test.js"
+    "test": "node --test tests/calculators/*.test.js tests/ui/*.test.js"
   }
 }

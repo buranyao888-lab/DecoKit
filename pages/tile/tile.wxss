@@ -1,1 +1,8 @@
-/* This page uses the shared tool-page styles from app.wxss. */
+.merchant-result__message {
+  display: block;
+  margin-top: 12rpx;
+  color: #465640;
+  font-size: 27rpx;
+  font-weight: 650;
+  line-height: 1.5;
+}

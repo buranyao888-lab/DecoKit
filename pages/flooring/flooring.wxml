@@ -3,9 +3,52 @@
   <view class="page-title">地板用量</view>
   <view class="page-description">结合房间面积和铺装方式预估采购面积。</view>
 
-  <view class="placeholder-card">
-    <view class="placeholder-icon">板</view>
-    <text class="placeholder-title">工具框架已就绪</text>
-    <text class="placeholder-text">输入与计算功能即将开放。</text>
+  <view class="form-card">
+    <text class="form-section-title">填写铺装信息</text>
+    <text class="form-note">铺装方式需要手动选择，异形空间由计算器统一计入损耗。</text>
+
+    <view class="field">
+      <view class="field__header"><text class="field__label">净铺装面积</text><text class="field__unit">㎡</text></view>
+      <input class="field__input {{fieldErrors.netAreaM2 ? 'field__input--error' : ''}}" type="digit" value="{{form.netAreaM2}}" placeholder="例如 85.5" data-field="netAreaM2" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.netAreaM2}}" class="field__error">{{fieldErrors.netAreaM2}}</text>
+    </view>
+
+    <view class="field">
+      <view class="field__header"><text class="field__label">铺装方式</text><text class="field__unit">必选</text></view>
+      <view class="choice-row">
+        <button wx:for="{{layingOptions}}" wx:key="value" class="choice-chip {{form.layingMode === item.value ? 'choice-chip--active' : ''}}" data-value="{{item.value}}" bindtap="selectLayingMode">{{item.label}}</button>
+      </view>
+      <text wx:if="{{fieldErrors.layingMode}}" class="field__error">{{fieldErrors.layingMode}}</text>
+    </view>
+
+    <view class="toggle-row">
+      <view class="toggle-row__copy">
+        <text class="toggle-row__title">异形墙或柱较多</text>
+        <text class="toggle-row__description">开启后由计算器调整参考损耗</text>
+      </view>
+      <switch checked="{{form.irregularRoom}}" color="#596b52" bindchange="onIrregularChange" />
+    </view>
+
+    <view class="field">
+      <view class="field__header"><text class="field__label">每箱覆盖面积</text><text class="field__optional">选填 · ㎡/箱</text></view>
+      <input class="field__input {{fieldErrors.boxCoverageM2 ? 'field__input--error' : ''}}" type="digit" value="{{form.boxCoverageM2}}" placeholder="填写后计算箱数" data-field="boxCoverageM2" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.boxCoverageM2}}" class="field__error">{{fieldErrors.boxCoverageM2}}</text>
+    </view>
+
+    <view class="button-row">
+      <button class="primary-button" bindtap="calculate">计算用量</button>
+      <button class="secondary-button" bindtap="reset">重置</button>
+    </view>
+    <view wx:if="{{pageError}}" class="page-error">{{pageError}}</view>
+  </view>
+
+  <view wx:if="{{hasCalculated}}" class="result-card">
+    <view class="result-heading"><text class="result-title">计算结果</text><text class="confidence-badge">{{displayResult.confidence}}</text></view>
+    <view class="result-grid">
+      <view class="result-item"><text class="result-item__label">参考损耗</text><text class="result-item__value">{{displayResult.lossRate}}</text></view>
+      <view class="result-item result-item--primary"><text class="result-item__label">推荐采购面积</text><text class="result-item__value">{{displayResult.purchaseAreaM2}}</text><text class="result-item__unit">㎡</text></view>
+      <view wx:if="{{displayResult.hasBoxes}}" class="result-item"><text class="result-item__label">建议箱数</text><text class="result-item__value">{{displayResult.boxes}}</text><text class="result-item__unit">箱</text></view>
+    </view>
+    <button class="share-button" open-type="share">分享这个工具</button>
   </view>
 </view>

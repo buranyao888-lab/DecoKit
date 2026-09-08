@@ -3,9 +3,53 @@
   <view class="page-title">美缝剂用量</view>
   <view class="page-description">根据铺贴面积、砖缝宽度与深度估算参考用量。</view>
 
-  <view class="placeholder-card">
-    <view class="placeholder-icon">缝</view>
-    <text class="placeholder-title">工具框架已就绪</text>
-    <text class="placeholder-text">输入与计算功能即将开放。</text>
+  <view class="form-card">
+    <text class="form-section-title">填写砖缝信息</text>
+    <text class="form-note">结果为理论填充量，不计算品牌单支用量或购买支数。</text>
+
+    <view class="field">
+      <view class="field__header"><text class="field__label">铺贴面积</text><text class="field__unit">㎡</text></view>
+      <input class="field__input {{fieldErrors.areaM2 ? 'field__input--error' : ''}}" type="digit" value="{{form.areaM2}}" placeholder="例如 12.5" data-field="areaM2" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.areaM2}}" class="field__error">{{fieldErrors.areaM2}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">瓷砖长度</text><text class="field__unit">mm</text></view>
+      <input class="field__input {{fieldErrors.tileLengthMm ? 'field__input--error' : ''}}" type="digit" value="{{form.tileLengthMm}}" placeholder="例如 600" data-field="tileLengthMm" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.tileLengthMm}}" class="field__error">{{fieldErrors.tileLengthMm}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">瓷砖宽度</text><text class="field__unit">mm</text></view>
+      <input class="field__input {{fieldErrors.tileWidthMm ? 'field__input--error' : ''}}" type="digit" value="{{form.tileWidthMm}}" placeholder="例如 600" data-field="tileWidthMm" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.tileWidthMm}}" class="field__error">{{fieldErrors.tileWidthMm}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">缝宽</text><text class="field__unit">mm</text></view>
+      <input class="field__input {{fieldErrors.jointWidthMm ? 'field__input--error' : ''}}" type="digit" value="{{form.jointWidthMm}}" placeholder="例如 2" data-field="jointWidthMm" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.jointWidthMm}}" class="field__error">{{fieldErrors.jointWidthMm}}</text>
+    </view>
+    <view class="field">
+      <view class="field__header"><text class="field__label">缝深</text><text class="field__optional">选填 · mm</text></view>
+      <input class="field__input {{fieldErrors.jointDepthMm ? 'field__input--error' : ''}}" type="digit" value="{{form.jointDepthMm}}" placeholder="留空使用默认 {{defaultJointDepthMm}}mm" data-field="jointDepthMm" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.jointDepthMm}}" class="field__error">{{fieldErrors.jointDepthMm}}</text>
+    </view>
+
+    <view class="button-row">
+      <button class="primary-button" bindtap="calculate">计算用量</button>
+      <button class="secondary-button" bindtap="reset">重置</button>
+    </view>
+    <view wx:if="{{pageError}}" class="page-error">{{pageError}}</view>
+  </view>
+
+  <view wx:if="{{hasCalculated}}" class="result-card">
+    <view class="result-heading"><text class="result-title">理论结果</text><text class="confidence-badge">{{displayResult.confidence}}</text></view>
+    <view class="result-grid">
+      <view class="result-item"><text class="result-item__label">砖缝总长度</text><text class="result-item__value">{{displayResult.totalJointLengthM}}</text><text class="result-item__unit">m</text></view>
+      <view class="result-item result-item--primary"><text class="result-item__label">理论填充体积</text><text class="result-item__value">{{displayResult.volumeMl}}</text><text class="result-item__unit">ml</text></view>
+    </view>
+    <view class="result-detail"><text class="result-detail__title">参考明细</text><text class="result-detail__text">每平方米约 {{displayResult.jointLengthPerM2}} m 砖缝</text></view>
+    <view class="warning-list">
+      <view wx:for="{{warnings}}" wx:key="code" class="warning">{{item.message}}</view>
+    </view>
+    <button class="share-button" open-type="share">分享这个工具</button>
   </view>
 </view>

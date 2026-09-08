@@ -3,9 +3,46 @@
   <view class="page-title">窗帘宽度</view>
   <view class="page-description">根据轨道宽度和褶皱倍数估算成品布幅。</view>
 
-  <view class="placeholder-card">
-    <view class="placeholder-icon">帘</view>
-    <text class="placeholder-title">工具框架已就绪</text>
-    <text class="placeholder-text">输入与计算功能即将开放。</text>
+  <view class="form-card">
+    <text class="form-section-title">填写窗帘信息</text>
+    <text class="form-note">本工具只计算宽度，高度需要结合安装方式现场测量。</text>
+
+    <view class="field">
+      <view class="field__header"><text class="field__label">轨道宽度</text><text class="field__unit">m</text></view>
+      <input class="field__input {{fieldErrors.trackWidthM ? 'field__input--error' : ''}}" type="digit" value="{{form.trackWidthM}}" placeholder="例如 3.2" data-field="trackWidthM" bindinput="onInput" />
+      <text wx:if="{{fieldErrors.trackWidthM}}" class="field__error">{{fieldErrors.trackWidthM}}</text>
+    </view>
+
+    <view class="field">
+      <view class="field__header"><text class="field__label">褶皱倍数</text><text class="field__unit">默认 {{defaultFullness}} 倍</text></view>
+      <view class="choice-row">
+        <button wx:for="{{fullnessOptions}}" wx:key="value" class="choice-chip {{form.fullness === item.value ? 'choice-chip--active' : ''}}" data-index="{{index}}" bindtap="selectFullness">{{item.label}}</button>
+      </view>
+    </view>
+
+    <view class="field">
+      <view class="field__header"><text class="field__label">窗帘片数</text><text class="field__unit">默认 {{defaultPanels}} 片</text></view>
+      <view class="choice-row">
+        <button wx:for="{{panelOptions}}" wx:key="value" class="choice-chip {{form.panels === item.value ? 'choice-chip--active' : ''}}" data-index="{{index}}" bindtap="selectPanels">{{item.label}}</button>
+      </view>
+    </view>
+
+    <view class="button-row">
+      <button class="primary-button" bindtap="calculate">计算宽度</button>
+      <button class="secondary-button" bindtap="reset">重置</button>
+    </view>
+    <view wx:if="{{pageError}}" class="page-error">{{pageError}}</view>
+  </view>
+
+  <view wx:if="{{hasCalculated}}" class="result-card">
+    <view class="result-heading"><text class="result-title">计算结果</text><text class="confidence-badge">{{displayResult.confidence}}</text></view>
+    <view class="result-grid">
+      <view class="result-item result-item--primary"><text class="result-item__label">成品总宽度</text><text class="result-item__value">{{displayResult.totalFinishedWidthM}}</text><text class="result-item__unit">m</text></view>
+      <view class="result-item"><text class="result-item__label">单片成品宽度</text><text class="result-item__value">{{displayResult.singlePanelWidthM}}</text><text class="result-item__unit">m</text></view>
+    </view>
+    <view class="warning-list">
+      <view wx:for="{{warnings}}" wx:key="code" class="warning">{{item.message}}</view>
+    </view>
+    <button class="share-button" open-type="share">分享这个工具</button>
   </view>
 </view>
