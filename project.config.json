@@ -1,5 +1,5 @@
 {
-  "appid": "touristappid",
+  "appid": "wx28bea4747e7fcedc",
   "compileType": "miniprogram",
   "miniprogramRoot": "./",
   "projectname": "DecoKit",
@@ -8,5 +8,6 @@
     "postcss": true,
     "minified": false,
     "urlCheck": false
-  }
+  },
+  "isGameTourist": false
 }
