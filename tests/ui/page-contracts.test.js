@@ -134,6 +134,85 @@ test("Tile requires an explicit laying mode and maps merchant output", () => {
   assert.equal(display.merchantDifferenceBand, "略高，建议确认备用砖");
 });
 
+const MERCHANT_ADVISORY_TEXT =
+  "商家建议量与参考推荐量差异较大，可能与铺贴方式、切割损耗、备用砖预留或现场情况有关，建议确认计算口径后再核对采购数量。";
+
+test("Tile shows the frozen merchant advisory only for the LARGE_DIFFERENCE band", () => {
+  const tile = loadPage("tile");
+  const { MERCHANT_DIFFERENCE_BANDS } = require("../../utils/calculators/tile.js");
+
+  function displayFor(merchantPieces) {
+    const built = tile.buildCalculatorInput({
+      areaM2: "95",
+      tileLengthMm: "1000",
+      tileWidthMm: "1000",
+      layingMode: "straight",
+      piecesPerBox: "10",
+      merchantPieces
+    });
+    assert.equal(built.ok, true);
+    const result = calculators.calculateTile(built.input);
+    return { result, display: tile.formatResult(result) };
+  }
+
+  const large = displayFor("130");
+  assert.equal(
+    large.result.value.merchantDifferenceBand,
+    MERCHANT_DIFFERENCE_BANDS.LARGE_DIFFERENCE
+  );
+  assert.equal(large.display.merchantDifferenceBand, "差异较大，建议重新核算");
+  assert.equal(large.display.hasMerchantAdvisory, true);
+  assert.equal(large.display.merchantAdvisory, MERCHANT_ADVISORY_TEXT);
+
+  const slight = displayFor("110");
+  assert.equal(
+    slight.result.value.merchantDifferenceBand,
+    MERCHANT_DIFFERENCE_BANDS.SLIGHTLY_HIGH
+  );
+  assert.equal(slight.display.hasMerchantAdvisory, false);
+  assert.equal(slight.display.merchantAdvisory, "");
+
+  const lower = displayFor("50");
+  assert.equal(
+    lower.result.value.merchantDifferenceBand,
+    MERCHANT_DIFFERENCE_BANDS.NORMAL_REFERENCE_RANGE
+  );
+  assert.equal(lower.display.hasMerchantAdvisory, false);
+
+  const none = displayFor("");
+  assert.equal(none.display.hasMerchant, false);
+  assert.equal(none.display.hasMerchantAdvisory, false);
+});
+
+test("Tile merchant advisory is presentation-only and keeps Engine/analytics frozen", () => {
+  const source = fs.readFileSync(
+    path.join(PROJECT_ROOT, "pages", "tile", "tile.js"),
+    "utf8"
+  );
+
+  assert.match(
+    source,
+    /merchantDifferenceBand === MERCHANT_DIFFERENCE_BANDS\.LARGE_DIFFERENCE/
+  );
+  assert.doesNotMatch(source, /merchantExcessRate\s*=/);
+  assert.doesNotMatch(source, /0\.2|20\s*%/);
+  assert.match(source, /reportCalculationSuccess\(CALCULATOR_KEY\)/);
+
+  const wxml = fs.readFileSync(
+    path.join(PROJECT_ROOT, "pages", "tile", "tile.wxml"),
+    "utf8"
+  );
+  const card = wxml.indexOf('class="result-detail merchant-result"');
+  const bandMessage = wxml.indexOf("merchant-result__message");
+  const advisory = wxml.indexOf("merchant-result__advisory");
+
+  assert.ok(card >= 0, "merchant comparison card missing");
+  assert.ok(bandMessage > card, "band message outside merchant card");
+  assert.ok(advisory > bandMessage, "advisory not below the band message");
+  assert.match(wxml, /wx:if="\{\{displayResult\.hasMerchantAdvisory\}\}"/);
+  assert.match(wxml, /\{\{displayResult\.merchantAdvisory\}\}/);
+});
+
 test("Paint direct mapping uses defaults from the frozen defaults module", () => {
   const paint = loadPage("paint");
   const initial = paint.createInitialData();

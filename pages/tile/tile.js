@@ -1,4 +1,5 @@
 const { calculateTile } = require("../../utils/calculators/index.js");
+const { MERCHANT_DIFFERENCE_BANDS } = require("../../utils/calculators/tile.js");
 const {
   formatInteger,
   formatRatio,
@@ -27,6 +28,9 @@ const MERCHANT_BAND_MESSAGES = Object.freeze({
   SIGNIFICANTLY_HIGH: "明显偏高，建议询问切割、备用砖或特殊铺贴",
   LARGE_DIFFERENCE: "差异较大，建议重新核算"
 });
+
+const MERCHANT_ADVISORY_TEXT =
+  "商家建议量与参考推荐量差异较大，可能与铺贴方式、切割损耗、备用砖预留或现场情况有关，建议确认计算口径后再核对采购数量。";
 
 function createInitialData() {
   return {
@@ -94,6 +98,8 @@ function buildCalculatorInput(form) {
 function formatResult(result) {
   const value = result.value;
   const hasMerchant = value.merchantDifferenceBand !== undefined;
+  const hasMerchantAdvisory =
+    value.merchantDifferenceBand === MERCHANT_DIFFERENCE_BANDS.LARGE_DIFFERENCE;
 
   return {
     theoreticalPieces: formatInteger(value.theoreticalPieces),
@@ -106,6 +112,8 @@ function formatResult(result) {
     merchantDifferenceBand: hasMerchant
       ? MERCHANT_BAND_MESSAGES[value.merchantDifferenceBand] || "差异结果暂无法显示"
       : "",
+    hasMerchantAdvisory,
+    merchantAdvisory: hasMerchantAdvisory ? MERCHANT_ADVISORY_TEXT : "",
     confidence: getConfidenceLabel(result.meta.confidence)
   };
 }

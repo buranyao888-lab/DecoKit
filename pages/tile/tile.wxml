@@ -119,6 +119,7 @@
         </view>
       </view>
       <text class="merchant-result__message">{{displayResult.merchantDifferenceBand}}</text>
+      <text wx:if="{{displayResult.hasMerchantAdvisory}}" class="merchant-result__advisory">{{displayResult.merchantAdvisory}}</text>
     </view>
 
     <button class="share-button" open-type="share">分享这个工具</button>
