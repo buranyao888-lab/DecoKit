@@ -1,1 +1,22 @@
-/* This page uses the shared tool-page styles from app.wxss. */
+/* Page-local presentation only. Shared tool-page styles come from app.wxss. */
+
+.result-item--span {
+  grid-column: 1 / -1;
+}
+
+.result-item__value {
+  min-width: 0;
+}
+
+.curtain-choice-row .choice-chip {
+  flex: 1 1 auto;
+}
+
+.curtain-selector-divider {
+  padding-top: 28rpx;
+  border-top: 2rpx solid var(--color-divider);
+}
+
+.warning-list {
+  margin-top: var(--space-3);
+}

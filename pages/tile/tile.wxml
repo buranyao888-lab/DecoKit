@@ -81,14 +81,14 @@
       <text class="confidence-badge">{{displayResult.confidence}}</text>
     </view>
     <view class="result-grid">
+      <view class="result-item result-item--primary result-item--span">
+        <text class="result-item__label">推荐片数</text>
+        <text class="result-item__value">{{displayResult.recommendedPieces}}</text>
+        <text class="result-item__unit">片</text>
+      </view>
       <view class="result-item">
         <text class="result-item__label">理论片数</text>
         <text class="result-item__value">{{displayResult.theoreticalPieces}}</text>
-        <text class="result-item__unit">片</text>
-      </view>
-      <view class="result-item result-item--primary">
-        <text class="result-item__label">推荐片数</text>
-        <text class="result-item__value">{{displayResult.recommendedPieces}}</text>
         <text class="result-item__unit">片</text>
       </view>
       <view class="result-item">
@@ -104,7 +104,20 @@
 
     <view wx:if="{{displayResult.hasMerchant}}" class="result-detail merchant-result">
       <text class="result-detail__title">商家建议量对比</text>
-      <text class="result-detail__text">与推荐量差异：{{displayResult.merchantExcessRate}}</text>
+      <view class="merchant-metrics">
+        <view class="merchant-metric">
+          <text class="merchant-metric__label">商家建议量</text>
+          <text class="merchant-metric__value">{{form.merchantPieces}} 片</text>
+        </view>
+        <view class="merchant-metric">
+          <text class="merchant-metric__label">参考推荐量</text>
+          <text class="merchant-metric__value">{{displayResult.recommendedPieces}} 片</text>
+        </view>
+        <view class="merchant-metric">
+          <text class="merchant-metric__label">差异</text>
+          <text class="merchant-metric__value">{{displayResult.merchantExcessRate}}</text>
+        </view>
+      </view>
       <text class="merchant-result__message">{{displayResult.merchantDifferenceBand}}</text>
     </view>
 

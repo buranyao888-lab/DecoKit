@@ -15,14 +15,14 @@
 
     <view class="field">
       <view class="field__header"><text class="field__label">褶皱倍数</text><text class="field__unit">默认 {{defaultFullness}} 倍</text></view>
-      <view class="choice-row">
+      <view class="choice-row curtain-choice-row">
         <button wx:for="{{fullnessOptions}}" wx:key="value" class="choice-chip {{form.fullness === item.value ? 'choice-chip--active' : ''}}" data-index="{{index}}" bindtap="selectFullness">{{item.label}}</button>
       </view>
     </view>
 
-    <view class="field">
+    <view class="field curtain-selector-divider">
       <view class="field__header"><text class="field__label">窗帘片数</text><text class="field__unit">默认 {{defaultPanels}} 片</text></view>
-      <view class="choice-row">
+      <view class="choice-row curtain-choice-row">
         <button wx:for="{{panelOptions}}" wx:key="value" class="choice-chip {{form.panels === item.value ? 'choice-chip--active' : ''}}" data-index="{{index}}" bindtap="selectPanels">{{item.label}}</button>
       </view>
     </view>
@@ -37,8 +37,8 @@
   <view wx:if="{{hasCalculated}}" class="result-card">
     <view class="result-heading"><text class="result-title">计算结果</text><text class="confidence-badge">{{displayResult.confidence}}</text></view>
     <view class="result-grid">
-      <view class="result-item result-item--primary"><text class="result-item__label">成品总宽度</text><text class="result-item__value">{{displayResult.totalFinishedWidthM}}</text><text class="result-item__unit">m</text></view>
-      <view class="result-item"><text class="result-item__label">单片成品宽度</text><text class="result-item__value">{{displayResult.singlePanelWidthM}}</text><text class="result-item__unit">m</text></view>
+      <view class="result-item result-item--primary result-item--span"><text class="result-item__label">成品总宽度</text><text class="result-item__value">{{displayResult.totalFinishedWidthM}}</text><text class="result-item__unit">m</text></view>
+      <view class="result-item result-item--span"><text class="result-item__label">单片成品宽度</text><text class="result-item__value">{{displayResult.singlePanelWidthM}}</text><text class="result-item__unit">m</text></view>
     </view>
     <view class="warning-list">
       <view wx:for="{{warnings}}" wx:key="code" class="warning">{{item.message}}</view>

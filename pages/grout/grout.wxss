@@ -1,1 +1,17 @@
-/* This page uses the shared tool-page styles from app.wxss. */
+/* Page-local presentation only. Shared tool-page styles come from app.wxss. */
+
+.result-item--span {
+  grid-column: 1 / -1;
+}
+
+.result-item__value {
+  min-width: 0;
+}
+
+.warning-list {
+  margin-top: var(--space-3);
+}
+
+.warning {
+  padding: var(--space-4) var(--space-4);
+}

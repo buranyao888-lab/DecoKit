@@ -1,1 +1,13 @@
-/* This page uses the shared tool-page styles from app.wxss. */
+/* Page-local presentation only. Shared tool-page styles come from app.wxss. */
+
+.result-item--span {
+  grid-column: 1 / -1;
+}
+
+.flooring-choice-row .choice-chip {
+  flex: 1 1 auto;
+}
+
+.flooring-toggle-row .toggle-row__copy {
+  flex: 1 1 auto;
+}

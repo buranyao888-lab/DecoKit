@@ -178,9 +178,12 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-1);
 }
 
 .field__label {
+  min-width: 0;
   color: var(--color-text-strong);
   font-size: var(--font-body);
   font-weight: 600;
@@ -363,6 +366,7 @@ button {
 }
 
 .confidence-badge {
+  flex: 0 0 auto;
   padding: 9rpx var(--space-3);
   border-radius: var(--radius-pill);
   background: #e2eadb;

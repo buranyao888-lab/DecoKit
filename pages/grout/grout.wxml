@@ -43,13 +43,13 @@
   <view wx:if="{{hasCalculated}}" class="result-card">
     <view class="result-heading"><text class="result-title">理论结果</text><text class="confidence-badge">{{displayResult.confidence}}</text></view>
     <view class="result-grid">
-      <view class="result-item"><text class="result-item__label">砖缝总长度</text><text class="result-item__value">{{displayResult.totalJointLengthM}}</text><text class="result-item__unit">m</text></view>
-      <view class="result-item result-item--primary"><text class="result-item__label">理论填充体积</text><text class="result-item__value">{{displayResult.volumeMl}}</text><text class="result-item__unit">ml</text></view>
+      <view class="result-item result-item--primary result-item--span"><text class="result-item__label">理论填充体积</text><text class="result-item__value">{{displayResult.volumeMl}}</text><text class="result-item__unit">ml</text></view>
+      <view class="result-item result-item--span"><text class="result-item__label">砖缝总长度</text><text class="result-item__value">{{displayResult.totalJointLengthM}}</text><text class="result-item__unit">m</text></view>
     </view>
-    <view class="result-detail"><text class="result-detail__title">参考明细</text><text class="result-detail__text">每平方米约 {{displayResult.jointLengthPerM2}} m 砖缝</text></view>
     <view class="warning-list">
       <view wx:for="{{warnings}}" wx:key="code" class="warning">{{item.message}}</view>
     </view>
+    <view class="result-detail"><text class="result-detail__title">参考明细</text><text class="result-detail__text">每平方米约 {{displayResult.jointLengthPerM2}} m 砖缝</text></view>
     <button class="share-button" open-type="share">分享这个工具</button>
   </view>
 </view>

@@ -1,6 +1,44 @@
+/* Page-local presentation only. Shared tool-page styles come from app.wxss. */
+
+.result-item--span {
+  grid-column: 1 / -1;
+}
+
+.merchant-metrics {
+  margin-top: var(--space-3);
+}
+
+.merchant-metric {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  padding: var(--space-2) 0;
+}
+
+.merchant-metric + .merchant-metric {
+  border-top: 2rpx solid var(--color-divider);
+}
+
+.merchant-metric__label {
+  min-width: 0;
+  color: #697066;
+  font-size: var(--font-meta);
+}
+
+.merchant-metric__value {
+  min-width: 0;
+  color: #30342d;
+  font-size: var(--font-body);
+  font-weight: 600;
+  text-align: right;
+  word-break: break-all;
+}
+
 .merchant-result__message {
   display: block;
-  margin-top: 12rpx;
+  margin-top: var(--space-3);
   color: #465640;
   font-size: 27rpx;
   font-weight: 650;
