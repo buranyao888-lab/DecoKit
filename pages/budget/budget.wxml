@@ -9,52 +9,52 @@
 
     <view class="field">
       <view class="field__header"><text class="field__label">基础施工</text><text class="field__unit">元</text></view>
-      <input class="field__input {{fieldErrors.baseConstruction ? 'field__input--error' : ''}}" type="digit" value="{{form.baseConstruction}}" placeholder="请输入金额" data-field="baseConstruction" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.baseConstruction ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.baseConstruction}}" placeholder="请输入金额" data-field="baseConstruction" bindinput="onInput" />
       <text wx:if="{{fieldErrors.baseConstruction}}" class="field__error">{{fieldErrors.baseConstruction}}</text>
     </view>
     <view class="field">
       <view class="field__header"><text class="field__label">水电工程</text><text class="field__unit">元</text></view>
-      <input class="field__input {{fieldErrors.plumbingElectrical ? 'field__input--error' : ''}}" type="digit" value="{{form.plumbingElectrical}}" placeholder="请输入金额" data-field="plumbingElectrical" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.plumbingElectrical ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.plumbingElectrical}}" placeholder="请输入金额" data-field="plumbingElectrical" bindinput="onInput" />
       <text wx:if="{{fieldErrors.plumbingElectrical}}" class="field__error">{{fieldErrors.plumbingElectrical}}</text>
     </view>
     <view class="field">
       <view class="field__header"><text class="field__label">瓦工工程</text><text class="field__unit">元</text></view>
-      <input class="field__input {{fieldErrors.masonry ? 'field__input--error' : ''}}" type="digit" value="{{form.masonry}}" placeholder="请输入金额" data-field="masonry" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.masonry ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.masonry}}" placeholder="请输入金额" data-field="masonry" bindinput="onInput" />
       <text wx:if="{{fieldErrors.masonry}}" class="field__error">{{fieldErrors.masonry}}</text>
     </view>
     <view class="field">
       <view class="field__header"><text class="field__label">木工工程</text><text class="field__unit">元</text></view>
-      <input class="field__input {{fieldErrors.carpentry ? 'field__input--error' : ''}}" type="digit" value="{{form.carpentry}}" placeholder="请输入金额" data-field="carpentry" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.carpentry ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.carpentry}}" placeholder="请输入金额" data-field="carpentry" bindinput="onInput" />
       <text wx:if="{{fieldErrors.carpentry}}" class="field__error">{{fieldErrors.carpentry}}</text>
     </view>
     <view class="field">
       <view class="field__header"><text class="field__label">油漆工程</text><text class="field__unit">元</text></view>
-      <input class="field__input {{fieldErrors.painting ? 'field__input--error' : ''}}" type="digit" value="{{form.painting}}" placeholder="请输入金额" data-field="painting" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.painting ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.painting}}" placeholder="请输入金额" data-field="painting" bindinput="onInput" />
       <text wx:if="{{fieldErrors.painting}}" class="field__error">{{fieldErrors.painting}}</text>
     </view>
     <view class="field">
       <view class="field__header"><text class="field__label">主材</text><text class="field__unit">元</text></view>
-      <input class="field__input {{fieldErrors.mainMaterials ? 'field__input--error' : ''}}" type="digit" value="{{form.mainMaterials}}" placeholder="请输入金额" data-field="mainMaterials" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.mainMaterials ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.mainMaterials}}" placeholder="请输入金额" data-field="mainMaterials" bindinput="onInput" />
       <text wx:if="{{fieldErrors.mainMaterials}}" class="field__error">{{fieldErrors.mainMaterials}}</text>
     </view>
     <view class="field">
       <view class="field__header"><text class="field__label">定制</text><text class="field__unit">元</text></view>
-      <input class="field__input {{fieldErrors.customization ? 'field__input--error' : ''}}" type="digit" value="{{form.customization}}" placeholder="请输入金额" data-field="customization" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.customization ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.customization}}" placeholder="请输入金额" data-field="customization" bindinput="onInput" />
       <text wx:if="{{fieldErrors.customization}}" class="field__error">{{fieldErrors.customization}}</text>
     </view>
     <view class="field">
       <view class="field__header"><text class="field__label">厨卫</text><text class="field__unit">元</text></view>
-      <input class="field__input {{fieldErrors.kitchenBathroom ? 'field__input--error' : ''}}" type="digit" value="{{form.kitchenBathroom}}" placeholder="请输入金额" data-field="kitchenBathroom" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.kitchenBathroom ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.kitchenBathroom}}" placeholder="请输入金额" data-field="kitchenBathroom" bindinput="onInput" />
       <text wx:if="{{fieldErrors.kitchenBathroom}}" class="field__error">{{fieldErrors.kitchenBathroom}}</text>
     </view>
     <view class="field">
       <view class="field__header"><text class="field__label">安装</text><text class="field__unit">元</text></view>
-      <input class="field__input {{fieldErrors.installation ? 'field__input--error' : ''}}" type="digit" value="{{form.installation}}" placeholder="请输入金额" data-field="installation" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.installation ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.installation}}" placeholder="请输入金额" data-field="installation" bindinput="onInput" />
       <text wx:if="{{fieldErrors.installation}}" class="field__error">{{fieldErrors.installation}}</text>
     </view>
     <view class="field">
       <view class="field__header"><text class="field__label">预备金</text><text class="field__unit">元</text></view>
-      <input class="field__input {{fieldErrors.contingency ? 'field__input--error' : ''}}" type="digit" value="{{form.contingency}}" placeholder="请输入金额" data-field="contingency" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.contingency ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.contingency}}" placeholder="请输入金额" data-field="contingency" bindinput="onInput" />
       <text wx:if="{{fieldErrors.contingency}}" class="field__error">{{fieldErrors.contingency}}</text>
     </view>
 

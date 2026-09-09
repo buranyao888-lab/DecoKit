@@ -14,24 +14,24 @@
         <text class="field__label">净涂刷面积</text>
         <text class="field__unit">㎡</text>
       </view>
-      <input class="field__input {{fieldErrors.paintAreaM2 ? 'field__input--error' : ''}}" type="digit" value="{{form.paintAreaM2}}" placeholder="墙面与顶面实际涂刷面积" data-field="paintAreaM2" bindinput="onInput" />
+      <input class="field__input {{fieldErrors.paintAreaM2 ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.paintAreaM2}}" placeholder="墙面与顶面实际涂刷面积" data-field="paintAreaM2" bindinput="onInput" />
       <text wx:if="{{fieldErrors.paintAreaM2}}" class="field__error">{{fieldErrors.paintAreaM2}}</text>
     </view>
 
     <view wx:if="{{form.mode === 'assisted'}}" class="assisted-fields">
       <view class="field">
         <view class="field__header"><text class="field__label">房间周长</text><text class="field__unit">m</text></view>
-        <input class="field__input {{fieldErrors.perimeterM ? 'field__input--error' : ''}}" type="digit" value="{{form.perimeterM}}" placeholder="例如 20" data-field="perimeterM" bindinput="onInput" />
+        <input class="field__input {{fieldErrors.perimeterM ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.perimeterM}}" placeholder="例如 20" data-field="perimeterM" bindinput="onInput" />
         <text wx:if="{{fieldErrors.perimeterM}}" class="field__error">{{fieldErrors.perimeterM}}</text>
       </view>
       <view class="field">
         <view class="field__header"><text class="field__label">墙面高度</text><text class="field__unit">m</text></view>
-        <input class="field__input {{fieldErrors.heightM ? 'field__input--error' : ''}}" type="digit" value="{{form.heightM}}" placeholder="例如 2.8" data-field="heightM" bindinput="onInput" />
+        <input class="field__input {{fieldErrors.heightM ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.heightM}}" placeholder="例如 2.8" data-field="heightM" bindinput="onInput" />
         <text wx:if="{{fieldErrors.heightM}}" class="field__error">{{fieldErrors.heightM}}</text>
       </view>
       <view class="field">
         <view class="field__header"><text class="field__label">门窗洞口面积</text><text class="field__unit">㎡</text></view>
-        <input class="field__input {{fieldErrors.openingsAreaM2 ? 'field__input--error' : ''}}" type="digit" value="{{form.openingsAreaM2}}" placeholder="没有可填写 0" data-field="openingsAreaM2" bindinput="onInput" />
+        <input class="field__input {{fieldErrors.openingsAreaM2 ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.openingsAreaM2}}" placeholder="没有可填写 0" data-field="openingsAreaM2" bindinput="onInput" />
         <text wx:if="{{fieldErrors.openingsAreaM2}}" class="field__error">{{fieldErrors.openingsAreaM2}}</text>
       </view>
 
@@ -45,29 +45,37 @@
 
       <view wx:if="{{form.includeCeiling}}" class="field ceiling-field">
         <view class="field__header"><text class="field__label">顶面面积</text><text class="field__unit">㎡</text></view>
-        <input class="field__input {{fieldErrors.ceilingAreaM2 ? 'field__input--error' : ''}}" type="digit" value="{{form.ceilingAreaM2}}" placeholder="例如 25" data-field="ceilingAreaM2" bindinput="onInput" />
+        <input class="field__input {{fieldErrors.ceilingAreaM2 ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.ceilingAreaM2}}" placeholder="例如 25" data-field="ceilingAreaM2" bindinput="onInput" />
         <text wx:if="{{fieldErrors.ceilingAreaM2}}" class="field__error">{{fieldErrors.ceilingAreaM2}}</text>
       </view>
     </view>
 
-    <button class="advanced-toggle" bindtap="toggleAdvanced">{{advancedCollapsed ? '展开面漆高级参数' : '收起面漆高级参数'}}</button>
+    <button class="advanced-toggle" bindtap="toggleAdvanced">
+      <text class="advanced-toggle__label">{{advancedCollapsed ? '展开面漆高级参数' : '收起面漆高级参数'}}</text>
+      <text class="advanced-toggle__caret">{{advancedCollapsed ? '▾' : '▴'}}</text>
+    </button>
+
+    <text wx:if="{{advancedCollapsed && fieldErrors.coverageM2PerLPerCoat}}" class="field__error advanced-collapsed-error">{{fieldErrors.coverageM2PerLPerCoat}}</text>
+    <text wx:if="{{advancedCollapsed && fieldErrors.coatCount}}" class="field__error advanced-collapsed-error">{{fieldErrors.coatCount}}</text>
+    <text wx:if="{{advancedCollapsed && fieldErrors.reservePercent}}" class="field__error advanced-collapsed-error">{{fieldErrors.reservePercent}}</text>
 
     <view wx:if="{{!advancedCollapsed}}" class="subsection advanced-fields">
       <text class="subsection-title">面漆高级参数</text>
       <text class="form-note">底漆参数保持固定，不开放调整。</text>
+      <text class="form-note">留空时使用默认参数</text>
       <view class="field">
         <view class="field__header"><text class="field__label">覆盖率</text><text class="field__unit">㎡/L/遍</text></view>
-        <input class="field__input {{fieldErrors.coverageM2PerLPerCoat ? 'field__input--error' : ''}}" type="digit" value="{{form.coverageM2PerLPerCoat}}" placeholder="10 至 16" data-field="coverageM2PerLPerCoat" bindinput="onInput" />
+        <input class="field__input {{fieldErrors.coverageM2PerLPerCoat ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.coverageM2PerLPerCoat}}" placeholder="10 至 16" data-field="coverageM2PerLPerCoat" bindinput="onInput" />
         <text wx:if="{{fieldErrors.coverageM2PerLPerCoat}}" class="field__error">{{fieldErrors.coverageM2PerLPerCoat}}</text>
       </view>
       <view class="field">
         <view class="field__header"><text class="field__label">面漆遍数</text><text class="field__unit">遍</text></view>
-        <input class="field__input {{fieldErrors.coatCount ? 'field__input--error' : ''}}" type="digit" value="{{form.coatCount}}" placeholder="1 至 3" data-field="coatCount" bindinput="onInput" />
+        <input class="field__input {{fieldErrors.coatCount ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.coatCount}}" placeholder="1 至 3" data-field="coatCount" bindinput="onInput" />
         <text wx:if="{{fieldErrors.coatCount}}" class="field__error">{{fieldErrors.coatCount}}</text>
       </view>
       <view class="field">
         <view class="field__header"><text class="field__label">面漆预留</text><text class="field__unit">%</text></view>
-        <input class="field__input {{fieldErrors.reservePercent ? 'field__input--error' : ''}}" type="digit" value="{{form.reservePercent}}" placeholder="0 至 20" data-field="reservePercent" bindinput="onInput" />
+        <input class="field__input {{fieldErrors.reservePercent ? 'field__input--error' : ''}}" type="digit" cursor-spacing="24" value="{{form.reservePercent}}" placeholder="0 至 20" data-field="reservePercent" bindinput="onInput" />
         <text wx:if="{{fieldErrors.reservePercent}}" class="field__error">{{fieldErrors.reservePercent}}</text>
       </view>
     </view>
@@ -85,13 +93,20 @@
       <text class="confidence-badge">{{displayResult.confidence}}</text>
     </view>
     <view class="result-grid">
-      <view class="result-item"><text class="result-item__label">净涂刷面积</text><text class="result-item__value">{{displayResult.paintAreaM2}}</text><text class="result-item__unit">㎡</text></view>
       <view class="result-item result-item--primary"><text class="result-item__label">面漆用量</text><text class="result-item__value">{{displayResult.facePaintLiters}}</text><text class="result-item__unit">L</text></view>
       <view class="result-item result-item--primary"><text class="result-item__label">底漆用量</text><text class="result-item__value">{{displayResult.primerLiters}}</text><text class="result-item__unit">L</text></view>
+      <view class="result-item result-item--span"><text class="result-item__label">净涂刷面积</text><text class="result-item__value">{{displayResult.paintAreaM2}}</text><text class="result-item__unit">㎡</text></view>
     </view>
     <view wx:if="{{displayResult.hasAssistedAreas}}" class="result-detail">
       <text class="result-detail__title">面积计算明细</text>
-      <text class="result-detail__text">墙面总面积 {{displayResult.grossWallAreaM2}} ㎡ · 扣除洞口后 {{displayResult.wallNetArea}} ㎡</text>
+      <view class="detail-row">
+        <text class="detail-row__label">墙面总面积</text>
+        <text class="detail-row__value">{{displayResult.grossWallAreaM2}} ㎡</text>
+      </view>
+      <view class="detail-row">
+        <text class="detail-row__label">扣除洞口后</text>
+        <text class="detail-row__value">{{displayResult.wallNetArea}} ㎡</text>
+      </view>
     </view>
     <text class="result-note">底漆和面漆分别展示，实际包装规格请以产品说明为准。</text>
     <button class="share-button" open-type="share">分享这个工具</button>

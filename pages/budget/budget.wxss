@@ -1,3 +1,12 @@
+/* Page-local presentation only. Shared tool-page styles come from app.wxss. */
+
+/* Uniform row rhythm for the ten required amount fields. Visual separation only. */
+.field + .field {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 2rpx solid var(--color-divider);
+}
+
 .budget-total {
   margin-top: 28rpx;
   padding: 30rpx 26rpx;
@@ -8,16 +17,18 @@
 .budget-total__label {
   display: block;
   color: #657060;
-  font-size: 23rpx;
+  font-size: var(--font-meta);
 }
 
 .budget-total__value-row {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
   margin-top: 10rpx;
 }
 
 .budget-total__currency {
+  flex: 0 0 auto;
   margin-right: 8rpx;
   color: #344230;
   font-size: 28rpx;
@@ -25,8 +36,18 @@
 }
 
 .budget-total__value {
+  min-width: 0;
+  flex: 1 1 auto;
   color: #293326;
   font-size: 48rpx;
   font-weight: 750;
   word-break: break-all;
+}
+
+.warning-list {
+  margin-top: var(--space-3);
+}
+
+.warning {
+  padding: var(--space-4);
 }
