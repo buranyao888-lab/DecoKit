@@ -7,6 +7,9 @@ const {
   presentEngineError,
   presentWarnings
 } = require("../../utils/calculator-ui");
+const { reportCalculationSuccess } = require("../../utils/analytics.js");
+
+const CALCULATOR_KEY = "budget";
 
 function emptyBudgetForm() {
   return BUDGET_COMPONENTS.reduce((form, field) => {
@@ -118,6 +121,7 @@ const pageConfig = {
       warnings: presentWarnings(result.meta.warnings),
       hasCalculated: true
     });
+    reportCalculationSuccess(CALCULATOR_KEY);
   },
 
   reset() {

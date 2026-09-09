@@ -8,6 +8,9 @@ const {
   presentEngineError,
   presentWarnings
 } = require("../../utils/calculator-ui");
+const { reportCalculationSuccess } = require("../../utils/analytics.js");
+
+const CALCULATOR_KEY = "paint";
 
 const INPUT_FIELDS = Object.freeze([
   "mode",
@@ -218,6 +221,7 @@ const pageConfig = {
       warnings: presentWarnings(result.meta.warnings),
       hasCalculated: true
     });
+    reportCalculationSuccess(CALCULATOR_KEY);
   },
 
   reset() {

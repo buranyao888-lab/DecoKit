@@ -185,3 +185,50 @@ test("calculator modules are UI, cloud, network, time, random, and AI independen
     globalThis.App = previous.App;
   }
 });
+
+const PROJECT_ROOT = path.resolve(__dirname, "../..");
+
+function walkProductionJs(dir, files = []) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.name === "node_modules" || entry.name === ".git") continue;
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name === "tests") continue;
+      walkProductionJs(full, files);
+    } else if (entry.name.endsWith(".js")) {
+      files.push(full);
+    }
+  }
+  return files;
+}
+
+test("production code restricts wx.reportEvent to utils/analytics.js only", () => {
+  const analyticsPath = path.join(PROJECT_ROOT, "utils/analytics.js");
+  for (const file of walkProductionJs(PROJECT_ROOT)) {
+    const src = fs.readFileSync(file, "utf8");
+    if (/wx\.reportEvent\s*\(/.test(src)) {
+      assert.equal(file, analyticsPath, `unexpected wx.reportEvent in ${file}`);
+    }
+    assert.doesNotMatch(src, /wx\.reportAnalytics/, `wx.reportAnalytics forbidden in ${file}`);
+  }
+});
+
+test("calculator engine and calculator-ui do not reference analytics", () => {
+  const banned = /analytics|reportCalculationSuccess|reportEvent/;
+  for (const file of walkProductionJs(PROJECT_ROOT)) {
+    const isEngine = file.includes(path.join("utils", "calculators"));
+    const isUi = file.endsWith(path.join("utils", "calculator-ui.js"));
+    if (isEngine || isUi) {
+      assert.doesNotMatch(fs.readFileSync(file, "utf8"), banned, `analytics reference in ${file}`);
+    }
+  }
+});
+
+test("calculator pages call the helper and never call wx.reportEvent directly", () => {
+  for (const file of walkProductionJs(PROJECT_ROOT)) {
+    const src = fs.readFileSync(file, "utf8");
+    if (!/pageConfig\s*=/.test(src)) continue;
+    assert.match(src, /reportCalculationSuccess\s*\(/, `page missing helper call: ${file}`);
+    assert.doesNotMatch(src, /wx\.reportEvent\s*\(/, `page calls wx.reportEvent directly: ${file}`);
+  }
+});

@@ -11,6 +11,9 @@ const {
   presentEngineError,
   presentWarnings
 } = require("../../utils/calculator-ui");
+const { reportCalculationSuccess } = require("../../utils/analytics.js");
+
+const CALCULATOR_KEY = "curtain";
 
 const INPUT_FIELDS = Object.freeze(["trackWidthM", "fullness", "panels"]);
 
@@ -147,6 +150,7 @@ const pageConfig = {
       warnings: presentWarnings(result.meta.warnings),
       hasCalculated: true
     });
+    reportCalculationSuccess(CALCULATOR_KEY);
   },
 
   reset() {

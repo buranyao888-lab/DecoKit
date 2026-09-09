@@ -8,6 +8,9 @@ const {
   presentEngineError,
   presentWarnings
 } = require("../../utils/calculator-ui");
+const { reportCalculationSuccess } = require("../../utils/analytics.js");
+
+const CALCULATOR_KEY = "tile";
 
 const INPUT_FIELDS = Object.freeze([
   "areaM2",
@@ -176,6 +179,7 @@ const pageConfig = {
       warnings: presentWarnings(result.meta.warnings),
       hasCalculated: true
     });
+    reportCalculationSuccess(CALCULATOR_KEY);
   },
 
   reset() {
