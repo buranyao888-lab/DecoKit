@@ -8,7 +8,7 @@
   <view class="tool-section">
     <view class="section-heading">
       <text class="section-heading__title">常用计算</text>
-      <text class="section-heading__count">4 项工具</text>
+      <text class="section-heading__count">{{primaryTools.length}} 项工具</text>
     </view>
 
     <view class="tool-grid">
@@ -20,9 +20,11 @@
         bindtap="openTool"
         hover-class="tool-card--pressed"
       >
-        <view class="tool-card__icon">{{item.icon}}</view>
-        <text class="tool-card__name">{{item.name}}</text>
-        <text class="tool-card__description">{{item.description}}</text>
+        <view class="tool-card__body">
+          <view class="tool-card__icon">{{item.icon}}</view>
+          <text class="tool-card__name">{{item.name}}</text>
+          <text class="tool-card__description">{{item.description}}</text>
+        </view>
         <text class="tool-card__link">打开工具 →</text>
       </view>
     </view>
@@ -31,7 +33,7 @@
   <view class="tool-section tool-section--more">
     <view class="section-heading">
       <text class="section-heading__title">更多工具</text>
-      <text class="section-heading__count">2 项工具</text>
+      <text class="section-heading__count">{{moreTools.length}} 项工具</text>
     </view>
 
     <view class="more-list">

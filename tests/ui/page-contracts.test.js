@@ -416,6 +416,58 @@ test("all six page reset handlers restore their complete initial state", () => {
   }
 });
 
+const HOME_PAGE_FILE = path.join(PROJECT_ROOT, "pages/index/index.js");
+
+function loadHomePageConfig() {
+  delete require.cache[require.resolve(HOME_PAGE_FILE)];
+  const previousPage = globalThis.Page;
+  let registered;
+  globalThis.Page = config => {
+    registered = config;
+  };
+
+  try {
+    require(HOME_PAGE_FILE);
+  } finally {
+    globalThis.Page = previousPage;
+  }
+
+  assert.ok(registered, "homepage must register a Page configuration");
+  return registered;
+}
+
+test("homepage keeps exactly the six expected tools and their app routes", () => {
+  const home = loadHomePageConfig();
+  const appJson = JSON.parse(
+    fs.readFileSync(path.join(PROJECT_ROOT, "app.json"), "utf8")
+  );
+  const tools = [...home.data.primaryTools, ...home.data.moreTools];
+
+  assert.equal(tools.length, PAGE_SPECS.length);
+  assert.deepEqual(
+    tools.map(tool => tool.id),
+    PAGE_SPECS.map(([name]) => name)
+  );
+
+  for (const tool of tools) {
+    assert.equal(tool.path, `/pages/${tool.id}/${tool.id}`, tool.id);
+    assert.ok(appJson.pages.includes(`pages/${tool.id}/${tool.id}`), tool.id);
+  }
+
+  assert.equal(typeof home.openTool, "function");
+});
+
+test("homepage section counts stay presentation-derived", () => {
+  const source = fs.readFileSync(
+    path.join(PROJECT_ROOT, "pages/index/index.wxml"),
+    "utf8"
+  );
+
+  assert.doesNotMatch(source, /\d+\s*项工具/);
+  assert.match(source, /\{\{primaryTools\.length\}\}\s*项工具/);
+  assert.match(source, /\{\{moreTools\.length\}\}\s*项工具/);
+});
+
 test("production UI code has no Calculator formula duplication or native-incompatible APIs", () => {
   const files = PAGE_SPECS.map(([name]) =>
     path.join(PROJECT_ROOT, "pages", name, `${name}.js`)
