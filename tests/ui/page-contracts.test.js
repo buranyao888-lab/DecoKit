@@ -38,6 +38,23 @@ function loadPage(name) {
   }
 }
 
+function loadHomePage() {
+  const filename = path.join(PROJECT_ROOT, "pages", "index", "index.js");
+  delete require.cache[require.resolve(filename)];
+  const previousPage = globalThis.Page;
+  let registered;
+  globalThis.Page = config => {
+    registered = config;
+  };
+
+  try {
+    require(filename);
+    return registered;
+  } finally {
+    globalThis.Page = previousPage;
+  }
+}
+
 function setPath(object, dottedPath, value) {
   const parts = dottedPath.split(".");
   let target = object;
@@ -457,6 +474,14 @@ test("all six pages expose neutral native share metadata", () => {
     assert.equal(share.path, `/pages/${name}/${name}`, name);
     assert.equal(Object.hasOwn(share, "imageUrl"), false, name);
   }
+});
+
+test("homepage exposes privacy-safe native friend sharing", () => {
+  const share = loadHomePage().onShareAppMessage();
+  assert.deepEqual(share, {
+    title: "装修实用计算器",
+    path: "/pages/index/index"
+  });
 });
 
 test("every WXML event handler resolves to a page method", () => {

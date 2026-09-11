@@ -52,5 +52,12 @@ Page({
     const { path } = event.currentTarget.dataset;
 
     wx.navigateTo({ url: path });
+  },
+
+  onShareAppMessage() {
+    return {
+      title: "装修实用计算器",
+      path: "/pages/index/index"
+    };
   }
 });
